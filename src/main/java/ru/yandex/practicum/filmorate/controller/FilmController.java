@@ -28,6 +28,9 @@ public class FilmController {
     @PutMapping
     public Film update(@Valid @RequestBody Film film) {
         log.debug("Обновление фильма {}", film);
+        if (films.get(film.getId()) == null) {
+            throw new RuntimeException("Фильм не найден");
+        }
         films.put(film.getId(), film);
         return film;
     }
