@@ -31,8 +31,6 @@ public class User {
     private LocalDate birthday;
 
     public void setName(String name) {
-
         this.name = name.isBlank() ? this.login : name;
-
     }
 }
