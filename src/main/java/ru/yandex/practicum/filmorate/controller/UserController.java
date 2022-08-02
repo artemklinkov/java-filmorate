@@ -43,7 +43,7 @@ public class UserController {
 
     @GetMapping
     public Collection<User> getAllUsers() {
-        log.debug("Поллучение всех пользователей");
+        log.debug("Получение всех пользователей");
         return users.values();
     }
 
