@@ -89,7 +89,7 @@ public class Film {
         if (likes.contains(userId)) {
             this.likes.remove(userId);
         } else {
-            throw new NotFoundException(String.format("Пользователь с id %s не ставил лайк фильму", userId));
+            throw new NotFoundException("Пользователь с id %s не ставил лайк фильму".formatted(userId));
         }
     }
 }

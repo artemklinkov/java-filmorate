@@ -43,9 +43,11 @@ public class InMemoryFilmStorage implements FilmStorage {
 
     @Override
     public Film getFilmById(int id) {
-        return films.values().stream()
-                .filter(film -> film.getId() == id)
-                .findFirst().orElseThrow(() -> new NotFoundException(String.format("Фильм с id %s не найден", id)));
+        Film film = films.get(id);
+        if (film == null) {
+            throw new NotFoundException("Фильм с id %s не найден".formatted(id));
+        }
+        return film;
     }
 
     public void addLike(int filmId, int userId) {

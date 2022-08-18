@@ -1,5 +1,6 @@
 package ru.yandex.practicum.filmorate.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.User;
@@ -11,6 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class UserService {
     private UserStorage userStorage;
@@ -21,14 +23,17 @@ public class UserService {
     }
 
     public User create(User user) {
+        log.debug("Добавление пользователя {}", user);
         return userStorage.create(user);
     }
 
     public User update(User user) {
+        log.debug("Обновление пользователя {}", user);
         return userStorage.update(user);
     }
 
     public Collection<User> getAllUsers() {
+        log.debug("Получение всех пользователей");
         return userStorage.getAllUsers();
     }
 
@@ -41,8 +46,7 @@ public class UserService {
     }
 
     public Collection<User> getFriends(int id) {
-        User user = getUserById(id);
-        return user.getFriends().stream()
+        return getUserById(id).getFriends().stream()
                 .map(friendId -> getUserById(friendId))
                 .collect(Collectors.toCollection(() -> new ArrayList<>()));
     }

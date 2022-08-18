@@ -21,6 +21,12 @@ public class ErrorHandler {
     public ErrorResponse handleElementTonFound(final NotFoundException e) {
         return new ErrorResponse(e.getMessage());
     }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleRuntimeError(final RuntimeException e) {
+        return new ErrorResponse(e.getMessage());
+    }
 }
 
 class ErrorResponse {

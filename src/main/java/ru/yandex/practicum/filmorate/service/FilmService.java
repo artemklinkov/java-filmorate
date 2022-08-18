@@ -1,5 +1,6 @@
 package ru.yandex.practicum.filmorate.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.Film;
@@ -7,6 +8,7 @@ import ru.yandex.practicum.filmorate.storage.film.FilmStorage;
 
 import java.util.Collection;
 
+@Slf4j
 @Service
 public class FilmService {
     private FilmStorage filmStorage;
@@ -17,18 +19,22 @@ public class FilmService {
     }
 
     public Film create(Film film) {
+        log.debug("Добавление фильма {}", film);
         return filmStorage.create(film);
     }
 
     public Film update(Film film) {
+        log.debug("Обновление фильма {}", film);
         return filmStorage.update(film);
     }
 
     public Collection<Film> getAllFilms() {
+        log.debug("Получение всех фильмов");
         return filmStorage.getAllFilms();
     }
 
     public void delete(int id) {
+        log.debug("Удаление фильма");
         filmStorage.delete(id);
     }
 
