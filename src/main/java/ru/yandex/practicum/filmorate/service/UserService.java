@@ -6,11 +6,9 @@ import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.user.UserStorage;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -48,7 +46,7 @@ public class UserService {
     public Collection<User> getFriends(int id) {
         return getUserById(id).getFriends().stream()
                 .map(friendId -> getUserById(friendId))
-                .collect(Collectors.toCollection(() -> new ArrayList<>()));
+                .toList();
     }
 
     public void addFriend(int userId, int friendId) {
@@ -76,6 +74,6 @@ public class UserService {
 
         return mutualFriends.stream()
                 .map(id -> getUserById(id))
-                .collect(Collectors.toCollection(() -> new ArrayList<>()));
+                .toList();
     }
 }
