@@ -45,6 +45,7 @@ class FilmTest {
         film.setName("");
         film.setDescription("Test description");
         film.setReleaseDate(LocalDate.of(2022, 8, 1));
+        film.setMpa(new MPARating(1, "G"));
         film.setDuration(60);
 
         Set<ConstraintViolation<Film>> violations = validator.validate(film);
@@ -60,6 +61,7 @@ class FilmTest {
                 "Test description Test description Test description Test description Test description Test description" +
                 "Test description Test description Test description Test description Test description");
         film.setReleaseDate(LocalDate.of(2022, 8, 1));
+        film.setMpa(new MPARating(1, "G"));
         film.setDuration(60);
 
         Set<ConstraintViolation<Film>> violations = validator.validate(film);
@@ -86,6 +88,7 @@ class FilmTest {
         film.setName("Test name");
         film.setDescription("Test description");
         film.setReleaseDate(LocalDate.of(2022, 8, 1));
+        film.setMpa(new MPARating(1, "G"));
         film.setDuration(-60);
 
         Set<ConstraintViolation<Film>> violations = validator.validate(film);
