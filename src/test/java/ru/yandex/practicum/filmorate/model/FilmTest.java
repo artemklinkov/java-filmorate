@@ -25,12 +25,14 @@ class FilmTest {
 
     @Test
     void validateWithRightFilmData() {
-        Film film = Film.builder().build();
-        film.setId(1);
-        film.setName("Test name");
-        film.setDescription("Test description");
-        film.setReleaseDate(LocalDate.of(2022, 8, 1));
-        film.setDuration(60);
+        Film film = Film.builder()
+                .id(1)
+                .name("Test name")
+                .description("Test description")
+                .releaseDate(LocalDate.of(2022, 8, 1))
+                .duration(60)
+                .mpa(new MPARating(1, "G"))
+                .build();
 
         Set<ConstraintViolation<Film>> violations = validator.validate(film);
         assertTrue(violations.isEmpty());
