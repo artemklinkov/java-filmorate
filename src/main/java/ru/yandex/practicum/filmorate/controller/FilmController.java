@@ -7,7 +7,6 @@ import ru.yandex.practicum.filmorate.service.FilmService;
 
 import javax.validation.Valid;
 import java.util.Collection;
-import java.util.Comparator;
 
 @RestController
 @RequestMapping("/films")
@@ -57,10 +56,7 @@ public class FilmController {
 
     @GetMapping("/popular")
     public Collection<Film> getPopular(@RequestParam(defaultValue = "10") int count) {
-        return getAllFilms().stream()
-                .sorted(Comparator.comparing(Film::getRate).reversed())
-                .limit(count)
-                .toList();
+        return filmService.getPopular(count);
     }
 
 }

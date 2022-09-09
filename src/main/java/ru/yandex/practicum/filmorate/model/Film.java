@@ -1,10 +1,12 @@
 package ru.yandex.practicum.filmorate.model;
 
+import lombok.Builder;
 import lombok.Data;
 import ru.yandex.practicum.filmorate.annotation.AfterFirstFilmReleaseDate;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
@@ -12,6 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@Builder
 public class Film {
     private final static LocalDate FIRST_FILM_RELEASE_DATE = LocalDate.of(1895, 12, 28);
 
@@ -32,6 +35,12 @@ public class Film {
     private int rate;
 
     private Set<Long> likes = new HashSet<>();
+
+    @NotNull
+    private MPARating mpa;
+
+    private Set<Genre> genres = new HashSet<>();
+    ;
 
     public int getId() {
         return id;

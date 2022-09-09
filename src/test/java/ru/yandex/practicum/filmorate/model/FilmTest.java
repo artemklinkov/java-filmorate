@@ -25,7 +25,7 @@ class FilmTest {
 
     @Test
     void validateWithRightFilmData() {
-        Film film = new Film();
+        Film film = Film.builder().build();
         film.setId(1);
         film.setName("Test name");
         film.setDescription("Test description");
@@ -38,7 +38,7 @@ class FilmTest {
 
     @Test
     void validateWithEmptyFilmName() {
-        Film film = new Film();
+        Film film = Film.builder().build();
         film.setId(1);
         film.setName("");
         film.setDescription("Test description");
@@ -51,7 +51,7 @@ class FilmTest {
 
     @Test
     void validateWithFilmDescriptionOver200symbols() {
-        Film film = new Film();
+        Film film = Film.builder().build();
         film.setId(1);
         film.setName("Test name");
         film.setDescription("Test description Test description Test description Test description Test description" +
@@ -66,7 +66,7 @@ class FilmTest {
 
     @Test
     void validateWithFilmReleaseDateBefore28121895() {
-        Film film = new Film();
+        Film film = Film.builder().build();
         film.setId(1);
         film.setName("Test name");
         film.setDescription("Test description");
@@ -79,7 +79,7 @@ class FilmTest {
 
     @Test
     void validateWithNegativeFilmDuration() {
-        Film film = new Film();
+        Film film = Film.builder().build();
         film.setId(1);
         film.setName("Test name");
         film.setDescription("Test description");
