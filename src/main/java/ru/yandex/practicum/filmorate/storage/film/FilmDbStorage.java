@@ -60,8 +60,7 @@ public class FilmDbStorage implements FilmStorage {
             }
         }
 
-        String sql_select = SELECT_FILM;
-        List<Film> films = jdbcTemplate.query(sql_select, (rs, rowNum) -> makeFilm(rs), keyHolder.getKey());
+        List<Film> films = jdbcTemplate.query(SELECT_FILM, (rs, rowNum) -> makeFilm(rs), keyHolder.getKey());
         return films.get(0);
     }
 
@@ -93,10 +92,7 @@ public class FilmDbStorage implements FilmStorage {
             }
         }
 
-        String sqlSelect = SELECT_FILM;
-        List<Film> films = jdbcTemplate.query(sqlSelect, (rs, rowNum) -> makeFilm(rs), film.getId());
-        Film filmUpd = films.get(0);
-        return filmUpd;
+        return jdbcTemplate.query(SELECT_FILM, (rs, rowNum) -> makeFilm(rs), film.getId()).get(0);
     }
 
     @Override
@@ -120,8 +116,7 @@ public class FilmDbStorage implements FilmStorage {
                 "f.mpa_rating, " +
                 "mpa.name mpa_name " +
                 "FROM films f LEFT JOIN mpa_ratings mpa ON f.mpa_rating=mpa.id";
-        List<Film> films = jdbcTemplate.query(sql, (rs, rowNum) -> makeFilm(rs));
-        return films;
+        return jdbcTemplate.query(sql, (rs, rowNum) -> makeFilm(rs));
     }
 
     @Override
@@ -136,14 +131,12 @@ public class FilmDbStorage implements FilmStorage {
                 "mpa.name mpa_name " +
                 "FROM films f LEFT JOIN mpa_ratings mpa ON f.mpa_rating=mpa.id " +
                 "ORDER BY RATE DESC LIMIT ?";
-        List<Film> films = jdbcTemplate.query(sql, (rs, rowNum) -> makeFilm(rs), count);
-        return films;
+        return jdbcTemplate.query(sql, (rs, rowNum) -> makeFilm(rs), count);
     }
 
     @Override
     public Film getFilmById(int id) {
-        String sqlSelect = SELECT_FILM;
-        List<Film> films = jdbcTemplate.query(sqlSelect, (rs, rowNum) -> makeFilm(rs), id);
+        List<Film> films = jdbcTemplate.query(SELECT_FILM, (rs, rowNum) -> makeFilm(rs), id);
 
         if (films.size() == 0) {
             throw new NotFoundException("Фильм с id %s не найден".formatted(id));

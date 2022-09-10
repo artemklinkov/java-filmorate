@@ -40,7 +40,6 @@ public class Film {
     private MPARating mpa;
 
     private Set<Genre> genres = new HashSet<>();
-    ;
 
     public int getId() {
         return id;

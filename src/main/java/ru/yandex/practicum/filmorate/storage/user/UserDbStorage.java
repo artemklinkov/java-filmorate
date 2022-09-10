@@ -41,8 +41,7 @@ public class UserDbStorage implements UserStorage {
         }, keyHolder);
 
         String sql_select = "SELECT * FROM users WHERE id=?";
-        List<User> users = jdbcTemplate.query(sql_select, (rs, rowNum) -> makeUser(rs), keyHolder.getKey());
-        return users.get(0);
+        return jdbcTemplate.query(sql_select, (rs, rowNum) -> makeUser(rs), keyHolder.getKey()).get(0);
     }
 
     @Override
@@ -133,7 +132,7 @@ public class UserDbStorage implements UserStorage {
 
     @Override
     public void confirmFriendship(int userId, int friendId) {
-        String sql = "UPDATE friends SET is_confirmed=TRUE WHERE USER_ID=? AND FRIEND_ID=?)";
+        String sql = "UPDATE friends SET is_confirmed=TRUE WHERE USER_ID=? AND FRIEND_ID=?";
         int result = jdbcTemplate.update(sql, userId, friendId);
 
         if (result == 0) {
