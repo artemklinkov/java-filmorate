@@ -25,12 +25,14 @@ class FilmTest {
 
     @Test
     void validateWithRightFilmData() {
-        Film film = new Film();
-        film.setId(1);
-        film.setName("Test name");
-        film.setDescription("Test description");
-        film.setReleaseDate(LocalDate.of(2022, 8, 1));
-        film.setDuration(60);
+        Film film = Film.builder()
+                .id(1)
+                .name("Test name")
+                .description("Test description")
+                .releaseDate(LocalDate.of(2022, 8, 1))
+                .duration(60)
+                .mpa(new MPARating(1, "G"))
+                .build();
 
         Set<ConstraintViolation<Film>> violations = validator.validate(film);
         assertTrue(violations.isEmpty());
@@ -38,11 +40,12 @@ class FilmTest {
 
     @Test
     void validateWithEmptyFilmName() {
-        Film film = new Film();
+        Film film = Film.builder().build();
         film.setId(1);
         film.setName("");
         film.setDescription("Test description");
         film.setReleaseDate(LocalDate.of(2022, 8, 1));
+        film.setMpa(new MPARating(1, "G"));
         film.setDuration(60);
 
         Set<ConstraintViolation<Film>> violations = validator.validate(film);
@@ -51,13 +54,14 @@ class FilmTest {
 
     @Test
     void validateWithFilmDescriptionOver200symbols() {
-        Film film = new Film();
+        Film film = Film.builder().build();
         film.setId(1);
         film.setName("Test name");
         film.setDescription("Test description Test description Test description Test description Test description" +
                 "Test description Test description Test description Test description Test description Test description" +
                 "Test description Test description Test description Test description Test description");
         film.setReleaseDate(LocalDate.of(2022, 8, 1));
+        film.setMpa(new MPARating(1, "G"));
         film.setDuration(60);
 
         Set<ConstraintViolation<Film>> violations = validator.validate(film);
@@ -66,7 +70,7 @@ class FilmTest {
 
     @Test
     void validateWithFilmReleaseDateBefore28121895() {
-        Film film = new Film();
+        Film film = Film.builder().build();
         film.setId(1);
         film.setName("Test name");
         film.setDescription("Test description");
@@ -79,11 +83,12 @@ class FilmTest {
 
     @Test
     void validateWithNegativeFilmDuration() {
-        Film film = new Film();
+        Film film = Film.builder().build();
         film.setId(1);
         film.setName("Test name");
         film.setDescription("Test description");
         film.setReleaseDate(LocalDate.of(2022, 8, 1));
+        film.setMpa(new MPARating(1, "G"));
         film.setDuration(-60);
 
         Set<ConstraintViolation<Film>> violations = validator.validate(film);

@@ -2,13 +2,12 @@ package ru.yandex.practicum.filmorate.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.user.UserStorage;
 
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 @Slf4j
 @Service
@@ -16,7 +15,7 @@ public class UserService {
     private UserStorage userStorage;
 
     @Autowired
-    public UserService(UserStorage userStorage) {
+    public UserService(@Qualifier("userDBStorage") UserStorage userStorage) {
         this.userStorage = userStorage;
     }
 
@@ -50,30 +49,18 @@ public class UserService {
     }
 
     public void addFriend(int userId, int friendId) {
-        User user = getUserById(userId);
-        User friend = getUserById(friendId);
-
-        user.addFriend(friendId);
-        friend.addFriend(userId);
+        userStorage.addFriend(userId, friendId);
     }
 
     public void deleteFriend(int userId, int friendId) {
-        User user = getUserById(userId);
-        User friend = getUserById(friendId);
-
-        user.deleteFriend(friendId);
-        friend.deleteFriend(userId);
+        userStorage.deleteFriend(userId, friendId);
     }
 
     public Collection<User> getCommonFriends(int userId, int friendId) {
-        User user = getUserById(userId);
-        User friend = getUserById(friendId);
+        return userStorage.getCommonFriends(userId, friendId);
+    }
 
-        Set<Integer> mutualFriends = new HashSet<>(user.getFriends());
-        mutualFriends.retainAll(friend.getFriends());
-
-        return mutualFriends.stream()
-                .map(id -> getUserById(id))
-                .toList();
+    public void confirmFriendship(int userId, int friendId) {
+        userStorage.confirmFriendship(userId, friendId);
     }
 }

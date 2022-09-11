@@ -6,10 +6,11 @@ import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.Generator;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
+@Component("filmInMemoryStorage")
 public class InMemoryFilmStorage implements FilmStorage {
 
     private final Map<Integer, Film> films = new HashMap<>();
@@ -60,5 +61,13 @@ public class InMemoryFilmStorage implements FilmStorage {
         Film film = getFilmById(filmId);
         film.removeLike((long) userId);
         film.setRate(film.getRate() - 1);
+    }
+
+    @Override
+    public Collection<Film> getPopular(int count) {
+        return getAllFilms().stream()
+                .sorted(Comparator.comparing(Film::getRate).reversed())
+                .limit(count)
+                .toList();
     }
 }
